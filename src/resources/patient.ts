@@ -5,10 +5,45 @@ import { identifier } from "../elements/identifier";
 import { DomainResource } from "./domainResource";
 
 class Patient extends DomainResource {
-  private $identifier: Array<identifier> = [];
+  private $identifier: Array<identifier>;
+  public set identifier(v: Array<identifier>) {
+    this.$identifier = v;
+    this.$.set(
+      "identifier",
+      v.map((v) => v.toJSON())
+    );
+  }
+  public get identifier(): Array<identifier> {
+    return this.$identifier;
+  }
   private $active: boolean;
+  public set active(v: boolean) {
+    this.$active = v;
+  }
+  public get active(): boolean {
+    return this.$active;
+  }
+
   private $_active: Element;
+  public set _active(v: Element) {
+    this.$_active = v;
+  }
+  public get _active(): Element {
+    return this.$_active;
+  }
+
   private $name: Array<HumanName>;
+  public set name(v: Array<HumanName>) {
+    this.$name = v;
+    this.$.set(
+      "name",
+      v.map((v) => v.toJSON())
+    );
+  }
+  public get name(): Array<HumanName> {
+    return this.$name;
+  }
+
   private $telecom: Array<ContactPoint>;
   public get telecom(): Array<ContactPoint> {
     return this.$telecom;
@@ -21,6 +56,24 @@ class Patient extends DomainResource {
     );
   }
 
+  private $gender: string;
+  public get gender(): string {
+    return this.$gender;
+  }
+  public set gender(value: string) {
+    this.$gender = value;
+    this.$.set("gender", value);
+  }
+
+  private $_gender: Element;
+  public get _gender(): Element {
+    return this.$_gender;
+  }
+  public set _gender(value: Element) {
+    this.$_gender = value;
+    this.$.set("_gender", value.toJSON());
+  }
+
   constructor(parameters?) {
     super(parameters);
     let _: Map<string, any> = new Map(Object.entries(parameters || {}));
@@ -28,6 +81,7 @@ class Patient extends DomainResource {
     _.forEach((value: any, key: string) => {
       switch (key) {
         case "identifier":
+          this.$identifier = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
@@ -83,50 +137,20 @@ class Patient extends DomainResource {
             this.$telecom.map((t) => t.toJSON())
           );
           break;
+
+        case "gender":
+          this.$gender = value;
+          this.$.set("gender", value);
+          break;
+
+        case "_gender":
+          this.$_gender = new Element(value);
+          this.$.set("gender", this.$_gender.toJSON());
+
         default:
           break;
       }
     });
-  }
-
-  public set identifier(v: Array<identifier>) {
-    this.$identifier = v;
-    this.$.set(
-      "identifier",
-      v.map((v) => v.toJSON())
-    );
-  }
-
-  public get identifier(): Array<identifier> {
-    return this.$identifier;
-  }
-
-  public set active(v: boolean) {
-    this.$active = v;
-  }
-
-  public get active(): boolean {
-    return this.$active;
-  }
-
-  public set _active(v: Element) {
-    this.$_active = v;
-  }
-
-  public get _active(): Element {
-    return this.$_active;
-  }
-
-  public set name(v: Array<HumanName>) {
-    this.$name = v;
-    this.$.set(
-      "name",
-      v.map((v) => v.toJSON())
-    );
-  }
-
-  public get name(): Array<HumanName> {
-    return this.$name;
   }
 }
 
