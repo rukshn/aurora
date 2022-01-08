@@ -1,0 +1,25 @@
+{
+  "name": "matix",
+  "version": "1.0.0",
+  "description": "A Simple FHIR server",
+  "main": "index.js",
+  "scripts": {
+    "test": "node .test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rukshn/fhir.git"
+  },
+  "author": "Rukshan <arkruka@gmail.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/rukshn/fhir/issues"
+  },
+  "homepage": "https://github.com/rukshn/fhir#readme",
+  "dependencies": {
+    "esbuild": "^0.14.10"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.8"
+  }
+}
