@@ -74,6 +74,24 @@ class Patient extends DomainResource {
     this.$.set("_gender", value.toJSON());
   }
 
+  private $birthDate: string;
+  public get birthDate(): string {
+    return this.$birthDate;
+  }
+  public set birthDate(value: string) {
+    this.$birthDate = value;
+    this.$.set("birthDate", value);
+  }
+
+  private $_birthDate: Element;
+  public get _birthDate(): Element {
+    return this.$_birthDate;
+  }
+  public set _birthDate(value: Element) {
+    this.$_birthDate = value;
+    this.$.set("_birthDate", value.toJSON());
+  }
+
   constructor(parameters?) {
     super(parameters);
     let _: Map<string, any> = new Map(Object.entries(parameters || {}));
@@ -146,6 +164,17 @@ class Patient extends DomainResource {
         case "_gender":
           this.$_gender = new Element(value);
           this.$.set("gender", this.$_gender.toJSON());
+          break;
+
+        case "brithDate":
+          this.$birthDate = value;
+          this.$.set("birthDate", value);
+          break;
+
+        case "_birthDate":
+          this.$_birthDate = new Element(value);
+          this.$.set("_birthDate", this.$_birthDate.toJSON());
+          break;
 
         default:
           break;
