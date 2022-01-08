@@ -1,4 +1,6 @@
+import { ContactPoint } from "../elements/contactPoint";
 import { Element } from "../elements/element";
+import { HumanName } from "../elements/humanName";
 import { identifier } from "../elements/identifier";
 import { DomainResource } from "./domainResource";
 
@@ -6,6 +8,18 @@ class Patient extends DomainResource {
   private $identifier: Array<identifier> = [];
   private $active: boolean;
   private $_active: Element;
+  private $name: Array<HumanName>;
+  private $telecom: Array<ContactPoint>;
+  public get telecom(): Array<ContactPoint> {
+    return this.$telecom;
+  }
+  public set telecom(value: Array<ContactPoint>) {
+    this.$telecom = value;
+    this.$.set(
+      "telecom",
+      value.map((v) => v.toJSON())
+    );
+  }
 
   constructor(parameters?) {
     super(parameters);
@@ -35,6 +49,39 @@ class Patient extends DomainResource {
         case "_active":
           this.$_active = value;
           this.$.set("_active", new Element(value));
+          break;
+
+        case "name":
+          this.$name = [];
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          (value as Array<any>).map((v) => {
+            let temp = new HumanName(v);
+            this.$name.push(temp);
+          });
+
+          this.$.set(
+            "name",
+            this.$name.map((n) => n.toJSON())
+          );
+          break;
+
+        case "telecom":
+          this.$telecom = [];
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+
+          (value as Array<any>).map((v) => {
+            let temp = new ContactPoint(v);
+            this.$telecom.push(temp);
+          });
+
+          this.$.set(
+            "telecom",
+            this.$telecom.map((t) => t.toJSON())
+          );
           break;
         default:
           break;
@@ -68,6 +115,18 @@ class Patient extends DomainResource {
 
   public get _active(): Element {
     return this.$_active;
+  }
+
+  public set name(v: Array<HumanName>) {
+    this.$name = v;
+    this.$.set(
+      "name",
+      v.map((v) => v.toJSON())
+    );
+  }
+
+  public get name(): Array<HumanName> {
+    return this.$name;
   }
 }
 
