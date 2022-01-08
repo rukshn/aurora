@@ -256,3 +256,5 @@ class HumanName extends Element {
     return this.$_sufix;
   }
 }
+
+export { HumanName };
