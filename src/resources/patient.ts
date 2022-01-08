@@ -92,6 +92,40 @@ class Patient extends DomainResource {
     this.$.set("_birthDate", value.toJSON());
   }
 
+  private $deceasedBoolean: boolean;
+  public get deceasedBoolean(): boolean {
+    return this.$deceasedBoolean;
+  }
+  public set deceasedBoolean(value: boolean) {
+    this.$deceasedBoolean = value;
+    this.$.set("deceasedBoolean", value);
+  }
+  private $_deceasedBoolean: Element;
+  public get _deceasedBoolean(): Element {
+    return this.$_deceasedBoolean;
+  }
+  public set _deceasedBoolean(value: Element) {
+    this.$_deceasedBoolean = value;
+    this.$.set("_deceasedBoolean", value.toJSON());
+  }
+
+  private $deceasedDateTime: string;
+  public get deceasedDateTime(): string {
+    return this.$deceasedDateTime;
+  }
+  public set deceasedDateTime(value: string) {
+    this.$deceasedDateTime = value;
+    this.$.set("deceasedDateTime", value);
+  }
+  private $_deceasedDateTime: Element;
+  public get _deceasedDateTime(): Element {
+    return this.$_deceasedDateTime;
+  }
+  public set _deceasedDateTime(value: Element) {
+    this.$_deceasedDateTime = value;
+    this.$.set("_deceasedDateTime", value.toJSON());
+  }
+
   constructor(parameters?) {
     super(parameters);
     let _: Map<string, any> = new Map(Object.entries(parameters || {}));
@@ -174,6 +208,26 @@ class Patient extends DomainResource {
         case "_birthDate":
           this.$_birthDate = new Element(value);
           this.$.set("_birthDate", this.$_birthDate.toJSON());
+          break;
+
+        case "deceasedBoolean":
+          this.$deceasedBoolean = value;
+          this.$.set("deceasedBoolean", value);
+          break;
+
+        case "_deceasedBoolean":
+          this.$_deceasedBoolean = new Element(value);
+          this.$.set("_deceasedBoolean", this.$_deceasedBoolean.toJSON());
+          break;
+
+        case "deceasedDateTime":
+          this.$deceasedDateTime = value;
+          this.$.set("deceasedDateTime", value);
+          break;
+
+        case "_deceasedDateTime":
+          this.$_deceasedDateTime = new Element(value);
+          this.$.set("_deceasedDateTime", this.$_deceasedDateTime.toJSON());
           break;
 
         default:
