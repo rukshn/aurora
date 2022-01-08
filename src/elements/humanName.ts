@@ -138,4 +138,121 @@ class HumanName extends Element {
   getResourceType(): string {
     return "HumanName";
   }
+
+  public set use(v: string) {
+    this.$use = v;
+    this.$.set("use", v);
+  }
+
+  public get use(): string {
+    return this.$use;
+  }
+
+  public set _use(v: Element) {
+    this.$_use = v;
+    this.$.set("_use", v.toJSON());
+  }
+
+  public get _use(): Element {
+    return this.$_use;
+  }
+
+  public set text(v: string) {
+    this.$text = v;
+    this.$.set("text", v);
+  }
+
+  public get text(): string {
+    return this.$text;
+  }
+
+  public set _text(v: Element) {
+    this.$_text = v;
+    this.$.set("_text", v);
+  }
+
+  public get _text(): Element {
+    return this.$_text;
+  }
+
+  public set family(v: string) {
+    this.$family = v;
+    this.$.set("family", v);
+  }
+
+  public get family(): string {
+    return this.$family;
+  }
+
+  public set _family(v: Element) {
+    this.$_family = v;
+    this.$.set("_family", v.toJSON());
+  }
+
+  public get _family(): Element {
+    return this.$_family;
+  }
+
+  public set given(v: Array<string>) {
+    this.$given = v;
+    this.$.set("given", v);
+  }
+
+  public get given(): Array<string> {
+    return this.$given;
+  }
+
+  public set _given(v: Array<Element>) {
+    this.$_given = v;
+    this.$.set(
+      "_given",
+      v.map((v) => v.toJSON())
+    );
+  }
+
+  public get _given(): Array<Element> {
+    return this.$_given;
+  }
+
+  public set prefix(v: Array<string>) {
+    this.$prefix = v;
+    this.$.set("prefix", v);
+  }
+
+  public get prefix(): Array<string> {
+    return this.$prefix;
+  }
+
+  public set _prefix(v: Array<Element>) {
+    this.$_prefix = v;
+    this.$.set(
+      "_prefix",
+      v.map((v) => v.toJSON())
+    );
+  }
+
+  public get _prefix(): Array<Element> {
+    return this.$_prefix;
+  }
+
+  public set sufix(v: Array<string>) {
+    this.$sufix = v;
+    this.$.set("sufix", v);
+  }
+
+  public get sufix(): Array<string> {
+    return this.$sufix;
+  }
+
+  public set _sufix(v: Array<Element>) {
+    this.$_sufix = v;
+    this.$.set(
+      "_sufix",
+      v.map((v) => v.toJSON())
+    );
+  }
+
+  public get _sufix(): Array<Element> {
+    return this.$_sufix;
+  }
 }
