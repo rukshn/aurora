@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/rukshn/fhir#readme",
   "dependencies": {
-    "esbuild": "^0.14.10"
+    "cors": "^2.8.5",
+    "esbuild": "^0.14.10",
+    "express": "^4.17.2",
+    "prisma": "^3.7.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.8"
