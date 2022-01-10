@@ -1,19 +1,24 @@
+import { Attachment } from "../elements/attachment";
 import { ContactPoint } from "../elements/contactPoint";
 import { Element } from "../elements/element";
 import { HumanName } from "../elements/humanName";
-import { identifier } from "../elements/identifier";
+import { Identifier } from "../elements/identifier";
+import { PatientCommunication } from "../elements/patientCommunication";
+import { PatientContact } from "../elements/patientContact";
+import { PatientLink } from "../elements/patientLink";
+import { Reference } from "../elements/reference";
 import { DomainResource } from "./domainResource";
 
 class Patient extends DomainResource {
-  private $identifier: Array<identifier>;
-  public set identifier(v: Array<identifier>) {
+  private $identifier: Array<Identifier>;
+  public set identifier(v: Array<Identifier>) {
     this.$identifier = v;
     this.$.set(
       "identifier",
       v.map((v) => v.toJSON())
     );
   }
-  public get identifier(): Array<identifier> {
+  public get identifier(): Array<Identifier> {
     return this.$identifier;
   }
   private $active: boolean;
@@ -126,6 +131,75 @@ class Patient extends DomainResource {
     this.$.set("_deceasedDateTime", value.toJSON());
   }
 
+  private $photo: Array<Attachment>;
+  public get photo(): Array<Attachment> {
+    return this.$photo;
+  }
+  public set photo(value: Array<Attachment>) {
+    this.$photo = value;
+    this.$.set(
+      "photo",
+      value.map((p) => p.toJSON())
+    );
+  }
+
+  private $contact: Array<PatientContact>;
+  public get contact(): Array<PatientContact> {
+    return this.$contact;
+  }
+  public set contact(value: Array<PatientContact>) {
+    this.$contact = value;
+    this.$.set(
+      "contact",
+      value.map((c) => c.toJSON())
+    );
+  }
+
+  private $communication: Array<PatientCommunication>;
+  public get communication(): Array<PatientCommunication> {
+    return this.$communication;
+  }
+  public set communication(value: Array<PatientCommunication>) {
+    this.$communication = value;
+    this.$.set(
+      "communication",
+      value.map((v) => v.toJSON())
+    );
+  }
+
+  private $generalPractitioner: Array<Reference>;
+  public get generalPractitioner(): Array<Reference> {
+    return this.$generalPractitioner;
+  }
+  public set generalPractitioner(value: Array<Reference>) {
+    this.$generalPractitioner = value;
+    this.$.set(
+      "generalPractitioner",
+      value.map((v) => v.toJSON())
+    );
+  }
+
+  private $managingOrganization: Reference;
+  public get managingOrganization(): Reference {
+    return this.$managingOrganization;
+  }
+  public set managingOrganization(value: Reference) {
+    this.$managingOrganization = value;
+    this.$.set("managingOrganization", value.toJSON());
+  }
+
+  private $link: Array<PatientLink>;
+  public get link(): Array<PatientLink> {
+    return this.$link;
+  }
+  public set link(value: Array<PatientLink>) {
+    this.$link = value;
+    this.$.set(
+      "link",
+      value.map((v) => v.toJSON())
+    );
+  }
+
   constructor(parameters?) {
     super(parameters);
     let _: Map<string, any> = new Map(Object.entries(parameters || {}));
@@ -138,7 +212,7 @@ class Patient extends DomainResource {
             value = [value];
           }
           (value as Array<any>).map((v) => {
-            let temp = new identifier(v);
+            let temp = new Identifier(v);
             this.$identifier.push(temp);
           });
           this.$.set(
@@ -230,6 +304,80 @@ class Patient extends DomainResource {
           this.$.set("_deceasedDateTime", this.$_deceasedDateTime.toJSON());
           break;
 
+        case "address":
+          break;
+        case "maritalStatus":
+          break;
+
+        case "photo":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          (value as Array<any>).map((v) => {
+            let temp = new Attachment(v);
+            this.$photo.push(temp);
+          });
+          this.$.set(
+            "photo",
+            this.$photo.map((p) => p.toJSON())
+          );
+          break;
+
+        case "contact":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          (value as Array<any>).map((v) => {
+            let temp = new PatientContact(v);
+            this.$contact.push(temp);
+          });
+
+          this.$.set(
+            "contact",
+            this.$contact.map((c) => c.toJSON())
+          );
+          break;
+
+        case "communication":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          (value as Array<any>).map((v) => {
+            let temp = new PatientCommunication(v);
+            this.$communication.push(temp);
+          });
+          break;
+
+        case "generalPractitioner":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          (value as Array<any>).map((v) => {
+            let temp = new Reference(value);
+            this.$generalPractitioner.push(temp);
+          });
+
+          this.$.set(
+            "generalPractitioner",
+            this.$generalPractitioner.map((g) => g.toJSON())
+          );
+          break;
+
+        case "managingOrganization":
+          this.managingOrganization = new Reference(value);
+          break;
+        case "link":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          (value as Array<any>).map((v) => {
+            let temp = new PatientLink(v);
+            this.$link.push(temp);
+          });
+          this.$.set(
+            "link",
+            this.$link.map((l) => l.toJSON())
+          );
         default:
           break;
       }
