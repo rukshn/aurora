@@ -1,6 +1,6 @@
 import { Element } from "./element";
 
-class identifier extends Element {
+class Identifier extends Element {
   private $use: string;
   private $_use: Element;
   private $type;
@@ -131,4 +131,4 @@ class identifier extends Element {
   }
 }
 
-export { identifier };
+export { Identifier };
