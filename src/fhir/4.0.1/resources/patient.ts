@@ -1,4 +1,6 @@
+import { Address } from "../elements/address";
 import { Attachment } from "../elements/attachment";
+import { CodeableConcept } from "../elements/codeableConcept";
 import { ContactPoint } from "../elements/contactPoint";
 import { Element } from "../elements/element";
 import { HumanName } from "../elements/humanName";
@@ -129,6 +131,63 @@ class Patient extends DomainResource {
   public set _deceasedDateTime(value: Element) {
     this.$_deceasedDateTime = value;
     this.$.set("_deceasedDateTime", value.toJSON());
+  }
+
+  private $address: Array<Address>;
+  public get address(): Array<Address> {
+    return this.$address;
+  }
+  public set address(value: Array<Address>) {
+    this.$address = value;
+    this.$.set(
+      "address",
+      value.map((v) => v.toJSON())
+    );
+  }
+
+  private $maritalStatus: CodeableConcept;
+  public get maritalStatus(): CodeableConcept {
+    return this.$maritalStatus;
+  }
+  public set maritalStatus(value: CodeableConcept) {
+    this.$maritalStatus = value;
+    this.$.set("maritalStatus", value.toJSON());
+  }
+
+  private $multipleBirthBoolean: boolean;
+  public get multipleBirthBoolean(): boolean {
+    return this.$multipleBirthBoolean;
+  }
+  public set multipleBirthBoolean(value: boolean) {
+    this.$multipleBirthBoolean = value;
+    this.$.set("multipleBirthBoolean", value);
+  }
+
+  private $_multipleBirthBoolean: Element;
+  public get _multipleBirthBoolean(): Element {
+    return this.$_multipleBirthBoolean;
+  }
+  public set _multipleBirthBoolean(value: Element) {
+    this.$_multipleBirthBoolean = value;
+    this.$.set("_multipleBirthBoolean", value.toJSON());
+  }
+
+  private $multipleBirthInteger: number;
+  public get multipleBirthInteger(): number {
+    return this.$multipleBirthInteger;
+  }
+  public set multipleBirthInteger(value: number) {
+    this.$multipleBirthInteger = value;
+    this.$.set("multipleBirthInteger", value);
+  }
+
+  private $_multipleBirthInteger: Element;
+  public get _multipleBirthInteger(): Element {
+    return this.$_multipleBirthInteger;
+  }
+  public set _multipleBirthInteger(value: Element) {
+    this.$_multipleBirthInteger = value;
+    this.$.set("_multipleBirthInteger", value.toJSON());
   }
 
   private $photo: Array<Attachment>;
@@ -305,8 +364,37 @@ class Patient extends DomainResource {
           break;
 
         case "address":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          (value as Array<any>).map((v) => {
+            let temp = new Address(v);
+            this.$address.push(temp);
+          });
+          this.$.set(
+            "address",
+            this.$address.map((a) => a.toJSON())
+          );
           break;
+
         case "maritalStatus":
+          this.maritalStatus = new CodeableConcept(value);
+          break;
+
+        case "multipleBirthBoolean":
+          this.multipleBirthBoolean = value;
+          break;
+
+        case "_multipleBirthBoolean":
+          this._multipleBirthBoolean = new Element(value);
+          break;
+
+        case "multipleBirthInteger":
+          this.multipleBirthInteger = value;
+          break;
+
+        case "_multipleBirthInteger":
+          this._multipleBirthInteger = new Element(value);
           break;
 
         case "photo":
