@@ -2,7 +2,7 @@ import { Coding } from "./coding";
 import { Element } from "./element";
 
 class CodeableConcept extends Element {
-  private $coding: Array<Coding>;
+  private $coding: Array<Coding> = [];
   public get coding(): Array<Coding> {
     return this.$coding;
   }
@@ -23,7 +23,7 @@ class CodeableConcept extends Element {
     this.$.set("text", value);
   }
 
-  private $_text: Element;
+  private $_text: Element = new Element();
   public get _text(): Element {
     return this.$_text;
   }
@@ -60,4 +60,4 @@ class CodeableConcept extends Element {
   }
 }
 
-export {CodeableConcept}
+export { CodeableConcept };
