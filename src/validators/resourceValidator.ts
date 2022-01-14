@@ -8,8 +8,27 @@
  */
 const resourceType = (target: string, source: string) => {
   if (target === source) {
-    return true;
+    return { status: true };
   } else {
-    return false;
+    console.log(target, source);
+    return { status: false };
   }
 };
+
+const validateCreateId = (body: object) => {
+  let map = new Map(Object.entries(body));
+  if (map.has("id")) {
+    return {
+      status: false,
+      message:
+        "ID should not exist in creating a new record, if you are updating an exisiting record, please use PUT",
+    };
+  } else {
+    return {
+      status: true,
+    };
+  }
+};
+
+exports.resourceType = resourceType;
+exports.validateCreateId = validateCreateId;
