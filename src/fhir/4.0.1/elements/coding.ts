@@ -6,13 +6,13 @@ class Coding extends Element {
     return this.$system;
   }
   public set system(value: string) {
-    this.system = value;
+    this.$system = value;
     this.$.set("system", value);
   }
 
   private $_system: Element;
   public get _system(): Element {
-    return this._system;
+    return this.$_system;
   }
   public set _system(value: Element) {
     this.$_system = value;
@@ -134,4 +134,4 @@ class Coding extends Element {
   }
 }
 
-export {Coding}
+export { Coding };
