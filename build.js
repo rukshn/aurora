@@ -1,8 +1,8 @@
 require("esbuild")
   .build({
-    entryPoints: ["./src/server.ts"],
+    entryPoints: ["./src/index.ts"],
     bundle: true,
     platform: "node",
-    outdir: "./build/",
+    outdir: "./dist/",
   })
   .catch(() => process.exit(1));
