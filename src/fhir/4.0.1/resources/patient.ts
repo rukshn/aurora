@@ -291,7 +291,7 @@ class Patient extends DomainResource {
           break;
 
         case "name":
-          this.$name = [];
+          this.name = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
@@ -307,7 +307,7 @@ class Patient extends DomainResource {
           break;
 
         case "telecom":
-          this.$telecom = [];
+          this.telecom = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
@@ -364,6 +364,7 @@ class Patient extends DomainResource {
           break;
 
         case "address":
+          this.address = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
@@ -398,6 +399,7 @@ class Patient extends DomainResource {
           break;
 
         case "photo":
+          this.photo = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
@@ -412,6 +414,7 @@ class Patient extends DomainResource {
           break;
 
         case "contact":
+          this.contact = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
@@ -427,6 +430,7 @@ class Patient extends DomainResource {
           break;
 
         case "communication":
+          this.$communication = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
@@ -437,6 +441,7 @@ class Patient extends DomainResource {
           break;
 
         case "generalPractitioner":
+          this.generalPractitioner = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
@@ -455,6 +460,7 @@ class Patient extends DomainResource {
           this.managingOrganization = new Reference(value);
           break;
         case "link":
+          this.link = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
