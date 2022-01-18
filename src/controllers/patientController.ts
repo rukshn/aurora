@@ -24,6 +24,7 @@ const createNewResource = async (content) => {
     resource.id = newResource.resource.uuid;
 
     const newPaitentObject = new Patient(resource);
+    // Set the resource type to patient
     newPaitentObject.resourceType = "Patient";
     // Check if the request has some meta infromation saved, if not create new meta element
     if (!newPaitentObject.meta) {
