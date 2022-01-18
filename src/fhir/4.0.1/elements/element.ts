@@ -21,6 +21,7 @@ class Element {
           this._id = new Element(value);
           break;
         case "extension":
+          this.extension = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
