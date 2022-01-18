@@ -122,6 +122,7 @@ class Resource {
           break;
 
         case "extension":
+          this.$extension = [];
           if (!Array.isArray(value)) {
             value = [value];
           }
