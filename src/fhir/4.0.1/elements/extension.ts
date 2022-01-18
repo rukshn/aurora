@@ -1,13 +1,4 @@
 import { Element } from "./element";
-
-interface Extension {
-  id: string;
-  _id: Element;
-  url: string;
-  _url: Element;
-  extension: Array<Extension>;
-}
-
 class Extension {
   constructor(parameters?) {
     let _: Map<string, any> = new Map();
