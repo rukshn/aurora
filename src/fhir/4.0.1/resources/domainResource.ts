@@ -1,9 +1,34 @@
 import { Extension } from "../elements/extension";
+import { Narrative } from "../elements/narrative";
 import { Resource } from "./resource";
 
 class DomainResource extends Resource {
   private $contained: Array<Resource> = [];
+  public set contained(v: Array<Resource>) {
+    this.$contained = v;
+    this.$.set("contained", v && v.map((v) => v.toJSON()));
+  }
+  public get contained(): Array<Resource> {
+    return this.$contained;
+  }
+
   private $modifierExtension: Array<Extension> = [];
+  public set modifierExtension(v: Array<Extension>) {
+    this.$modifierExtension = v;
+    this.$.set("modifierExtension", v && v.map((v) => v.toJSON()));
+  }
+  public get modifierExtension(): Array<Extension> {
+    return this.$modifierExtension;
+  }
+
+  private $text: Narrative = new Narrative();
+  public get text(): Narrative {
+    return this.$text;
+  }
+  public set text(value: Narrative) {
+    this.$text = value;
+    this.$.set("text", value.toJSON());
+  }
 
   constructor(parameters?) {
     super(parameters);
@@ -38,28 +63,13 @@ class DomainResource extends Resource {
               this.$modifierExtension.map((m) => m.toJSON())
           );
           break;
+        case "text":
+          this.text = new Narrative(value);
+          break;
         default:
           break;
       }
     });
-  }
-
-  public set contained(v: Array<Resource>) {
-    this.$contained = v;
-    this.$.set("contained", v && v.map((v) => v.toJSON()));
-  }
-
-  public set modifierExtension(v: Array<Extension>) {
-    this.$modifierExtension = v;
-    this.$.set("modifierExtension", v && v.map((v) => v.toJSON()));
-  }
-
-  public get contained(): Array<Resource> {
-    return this.$contained;
-  }
-
-  public get modifierExtension(): Array<Extension> {
-    return this.$modifierExtension;
   }
 }
 
