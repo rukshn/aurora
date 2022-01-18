@@ -4,7 +4,9 @@
   "description": "A Simple FHIR server",
   "main": "index.js",
   "scripts": {
-    "test": "node .test/test.js"
+    "test": "node .test/test.js",
+    "build": "node build.js",
+    "serve": "node ./dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +21,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "esbuild": "^0.14.10",
-    "express": "^4.17.2",
-    "prisma": "^3.7.0"
+    "express": "^4.17.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.8"
