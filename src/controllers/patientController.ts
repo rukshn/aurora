@@ -8,6 +8,11 @@ import { Patient } from "../fhir/4.0.1/resources/patient";
 const patientModel = require("../db/models/patientModel");
 
 const createNewResource = async (content) => {
+  // Remove any versionID or lastUpdated content from the Meta
+  if (content.meta) {
+    delete content.meta.lastUpdated;
+    delete content.meta.versionId;
+  }
   // This will create the patient class and populate child elements
   const patient = new Patient(content);
 
@@ -19,12 +24,21 @@ const createNewResource = async (content) => {
     resource.id = newResource.resource.uuid;
 
     const newPaitentObject = new Patient(resource);
-    // Generate the meta element
-    const meta = new Meta();
-    meta.lastUpdated = newResource.resource.lastUpdatedAt;
-    meta.versionId = newResource.resource.version;
-    // Set generated meta object as the resource meta
-    newPaitentObject.meta = meta;
+    newPaitentObject.resourceType = "Patient";
+    // Check if the request has some meta infromation saved, if not create new meta element
+    if (!newPaitentObject.meta) {
+      // Generate the meta element
+      const meta = new Meta();
+      // Set generated meta object as the resource meta
+      meta.lastUpdated = newResource.resource.lastUpdatedAt;
+      meta.versionId = newResource.resource.version;
+      newPaitentObject.meta = meta;
+    } else {
+      newPaitentObject.meta.lastUpdated = newResource.resource.lastUpdatedAt;
+      newPaitentObject.meta.versionId = newResource.resource.version;
+      newPaitentObject.meta = newPaitentObject.meta;
+    }
+
     // Return the result
     return {
       status: 200,
