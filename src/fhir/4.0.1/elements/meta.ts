@@ -9,7 +9,6 @@ class Meta extends Element {
   public set versionId(value: string) {
     this.$versionId = value;
     this.$.set("versionId", value);
-    console.log(this.$.get("versionId"));
   }
 
   private $_versionId: Element;
