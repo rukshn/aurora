@@ -112,65 +112,71 @@ class OperationOutcomeIssue extends Element {
     let _: Map<string, any> = new Map(Object.entries(parameters || {}));
 
     _.forEach((value: any, key: string) => {
-        switch (key) {
-            case 'severity':
-                this.severity = value
-                break;
-            case '_severity':
-                this._severity = new Element(value)
-                break;
-            case 'code':
-                this.code = value
-                break;
-            case '_code':
-                this._code = new Element(value)
-                break;
-            case 'details': 
-                this.details = new CodeableConcept(value)
-                break;
-            case 'diagnostics':
-                this.diagnostics = value
-                break;
-            case '_diagnostics':
-                this._diagnostics = new Element(value)
-                break;
-            case 'location':
-                if (!Array.isArray(value)) {
-                    value = [value]
-                }
-                this.location = value 
-                break;
-            case '_location':
-                if (!Array.isArray(value)) {
-                    value = [value]
-                }
-                (value as Array<any>).map((v) => {
-                    let temp = new Element(v)
-                    this.$_location.push(temp)
-                })
-                this.$.set('_location', this.$_location.map((l) => l.toJSON()))
-                break;
-            case 'expression':
-                if (!Array.isArray(value)) {
-                    value = [value]
-                }
-                this.expression = value
-                break;
-            case '_expression': 
-                if (!Array.isArray(value)) {
-                    value = [value]
-                }
-                (value as Array<any>).map((v) => {
-                    let temp = new Element(v)
-                    this.$_expression.push(temp)
-                })
-                this.$.set('_expression', this.$_expression.map((e) => e.toJSON()))
-                break;
-            default:
-                break;
-        }
-    } )
+      switch (key) {
+        case "severity":
+          this.severity = value;
+          break;
+        case "_severity":
+          this._severity = new Element(value);
+          break;
+        case "code":
+          this.code = value;
+          break;
+        case "_code":
+          this._code = new Element(value);
+          break;
+        case "details":
+          this.details = new CodeableConcept(value);
+          break;
+        case "diagnostics":
+          this.diagnostics = value;
+          break;
+        case "_diagnostics":
+          this._diagnostics = new Element(value);
+          break;
+        case "location":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          this.location = value;
+          break;
+        case "_location":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          (value as Array<any>).map((v) => {
+            let temp = new Element(v);
+            this.$_location.push(temp);
+          });
+          this.$.set(
+            "_location",
+            this.$_location.map((l) => l.toJSON())
+          );
+          break;
+        case "expression":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          this.expression = value;
+          break;
+        case "_expression":
+          if (!Array.isArray(value)) {
+            value = [value];
+          }
+          (value as Array<any>).map((v) => {
+            let temp = new Element(v);
+            this.$_expression.push(temp);
+          });
+          this.$.set(
+            "_expression",
+            this.$_expression.map((e) => e.toJSON())
+          );
+          break;
+        default:
+          break;
+      }
+    });
   }
 }
 
-export {OperationOutcomeIssue}
+export { OperationOutcomeIssue };
