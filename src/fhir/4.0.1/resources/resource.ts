@@ -1,24 +1,95 @@
 import { Element } from "../elements/element";
 import { Extension } from "../elements/extension";
 import { Meta } from "../elements/meta";
-
-interface Resource {
-  id: string;
-  _id: Element;
-  meta: Meta;
-  implicitRules: string;
-  _implicitRules: Element;
-  language: string;
-  _language: Element;
-  extension: Array<Extension>;
-  $: Map<string, any>;
-}
-
 class Resource {
   public $: Map<string, any> = new Map();
 
+  private $resourceType: string;
+  public get resourceType(): string {
+    return this.$resourceType;
+  }
+  public set resourceType(value: string) {
+    this.$resourceType = value;
+    this.$.set("resourceType", value);
+  }
+
+  private $id: string;
+  public get id(): string {
+    return this.$id;
+  }
+  public set id(value: string) {
+    this.$id = value;
+    this.$.set("id", value);
+  }
+
+  private $_id: Element;
+  public get _id(): Element {
+    return this.$_id;
+  }
+  public set _id(value: Element) {
+    this.$_id = value;
+    this.$.set("_id", value.toJSON());
+  }
+
+  private $meta: Meta;
+  public get meta(): Meta {
+    return this.$meta;
+  }
+  public set meta(value: Meta) {
+    this.$meta = value;
+    this.$.set("meta", value.toJSON());
+  }
+
+  private $implicitRules: string;
+  public get implicitRules(): string {
+    return this.$implicitRules;
+  }
+  public set implicitRules(value: string) {
+    this.$implicitRules = value;
+    this.$.set("implicitRules", value);
+  }
+
+  private $_implicitRules: Element;
+  public get _implicitRules(): Element {
+    return this.$_implicitRules;
+  }
+  public set _implicitRules(value: Element) {
+    this.$_implicitRules = value;
+    this.$.set("_implicitRules", value.toJSON());
+  }
+
+  private $language: string;
+  public get language(): string {
+    return this.$language;
+  }
+  public set language(value: string) {
+    this.$language = value;
+    this.$.set("language", value);
+  }
+
+  private $_language: Element;
+  public get _language(): Element {
+    return this.$_language;
+  }
+  public set _language(value: Element) {
+    this.$_language = value;
+    this.$.set("_language", value.toJSON());
+  }
+
+  private $extension: Array<Extension>;
+  public get extension(): Array<Extension> {
+    return this.$extension;
+  }
+  public set extension(value: Array<Extension>) {
+    this.$extension = value;
+    this.$.set(
+      "extension",
+      value.map((v) => v.toJSON())
+    );
+  }
+
   constructor(parameters?) {
-    let _ = new Map(Object.entries(parameters ?? {}));
+    let _ = new Map(Object.entries(parameters || {}));
 
     _.forEach((value: any, key: string) => {
       switch (key) {
@@ -46,15 +117,23 @@ class Resource {
           this.language = value;
           break;
 
+        case "_language":
+          this._language = new Element(value);
+          break;
+
         case "extension":
           if (!Array.isArray(value)) {
             value = [value];
           }
           (value as Array<any>).map((v) => {
             let temp: Extension = new Extension(v);
-            this.extension.push(temp);
+            this.$extension.push(temp);
           });
-
+          this.$.set(
+            "extension",
+            this.$extension.map((e) => e.toJSON())
+          );
+          break;
         default:
           this.$.set(key, value);
           break;
@@ -62,22 +141,8 @@ class Resource {
     });
   }
 
-  getResourceType(name: string = "Resource"): string {
-    return name;
-  }
-
   toJSON(): object {
-    let output: {} = {
-      resourceType: this.getResourceType(),
-      id: this.id,
-      _id: this._id && this._id.toJSON(),
-      meta: this.meta && this.meta.toJSON(),
-      implicitRules: this.implicitRules,
-      _implicitRules: this._implicitRules && this._implicitRules.toJSON(),
-      language: this.language,
-      _language: this._language && this._language.toJSON(),
-    };
-    return { ...output, ...Object.fromEntries(this.$) };
+    return { ...Object.fromEntries(this.$) };
   }
 }
 
