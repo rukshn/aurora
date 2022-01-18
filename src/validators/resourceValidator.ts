@@ -21,7 +21,7 @@ const validateCreateId = (body: object) => {
     return {
       status: false,
       message:
-        "ID should not exist in creating a new record, if you are updating an exisiting record, please use PUT",
+        "The POST method at a resrouce endpoint is for creating a new resoure. An ID should not exist in creating a new record, if you are updating an exisiting record, please make a PUT request",
     };
   } else {
     return {
