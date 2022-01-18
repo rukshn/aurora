@@ -9,12 +9,12 @@
  */
 const validateHeader = (header) => {
   if (
-    header.accpets("applicaiton/fhir+json") &&
-    header.is("application/json" || header.is("application/fhir+json"))
+    header.accepts("application/fhir+json") &&
+    (header.is("application/json") || header.is("application/fhir+json"))
   ) {
-    return true;
+    return { status: true, message: "header match" };
   } else {
-    return false;
+    return { status: false, message: "header mismatch" };
   }
 };
 
