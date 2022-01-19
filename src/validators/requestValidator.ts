@@ -7,7 +7,7 @@
  * @param header the request header of incoming request
  * @returns true or false
  */
-const validateHeader = (header) => {
+const validateAcceptHeader = (header) => {
   if (header.accepts("application/fhir+json")) {
     return { status: true, message: "header match" };
   } else {
@@ -15,4 +15,13 @@ const validateHeader = (header) => {
   }
 };
 
-exports.validateHeader = validateHeader;
+const validateRequestHeader = (header) => {
+  if (header.is("application/json")) {
+    return { status: true, message: "header match" };
+  } else {
+    return { status: false, message: "header mismatch" };
+  }
+};
+
+exports.validateAcceptHeader = validateAcceptHeader;
+exports.validateRequestHeader = validateRequestHeader;
