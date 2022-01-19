@@ -8,10 +8,7 @@
  * @returns true or false
  */
 const validateHeader = (header) => {
-  if (
-    header.accepts("application/fhir+json") &&
-    (header.is("application/json") || header.is("application/fhir+json"))
-  ) {
+  if (header.accepts("application/fhir+json")) {
     return { status: true, message: "header match" };
   } else {
     return { status: false, message: "header mismatch" };
