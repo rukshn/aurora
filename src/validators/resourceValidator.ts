@@ -6,7 +6,7 @@
  * @param source: string the resoucce type you are comparing against
  * @returns true or false
  */
-const resourceType = (target: string, source: string) => {
+const checkResourceType = (target: string, source: string) => {
   if (target === source) {
     return { status: true };
   } else {
@@ -30,5 +30,5 @@ const validateCreateId = (body: object) => {
   }
 };
 
-exports.resourceType = resourceType;
+exports.checkResourceType = checkResourceType;
 exports.validateCreateId = validateCreateId;
