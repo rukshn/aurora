@@ -68,6 +68,14 @@ const getPatientByUuid = async (uuid: string, version?: number) => {
   }
 };
 
+/**
+ * This function updates an exisitng patient resource, since FHIR server records history of each update to a resource, an exisiting resource is NOT updated
+ * But a NEW resrouce is created with the same UUID and a +1 version number
+ * @param patient Patient object with patient data
+ * @param version Version number of the new resource
+ * @param uuid  UUID of the existing patient record
+ * @returns newly created resrouce with new versionID
+ */
 const updatePatientResource = async (
   patient: Patient,
   version: number,
