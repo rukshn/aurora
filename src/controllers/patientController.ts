@@ -198,6 +198,83 @@ const updateResource = async (content) => {
   }
 };
 
+const readResourceByIdAndVersion = async (id: string, version: number) => {
+  // Read patient resource by ID and version
+  const patientData = await patientModel.getPatientByUuidAndVersion(
+    id,
+    version
+  );
+
+  // If resturned patient object is a success return patient information
+  if (patientData.status === "success") {
+    let resource = patientData.resource.resource;
+    // reaplce patient ID with the UUID
+    resource.id = patientData.resource.uuid;
+    // Create a new patient object
+    const newPaitentObject = new Patient(resource);
+    // set resource Type
+    newPaitentObject.resourceType = "Patient";
+
+    // If no meta element is found, create a new meta element
+    // Set version ID and lastupdated time
+    if (!newPaitentObject.meta) {
+      const meta = new Meta();
+      meta.versionId = patientData.resource.version;
+      meta.lastUpdated = patientData.resource.lastUpdatedAt;
+      newPaitentObject.meta = meta;
+    } else {
+      newPaitentObject.meta.lastUpdated = patientData.resource.lastUpdatedAt;
+      newPaitentObject.meta.versionId = patientData.resource.version;
+      newPaitentObject.meta = newPaitentObject.meta;
+    }
+    // return the requested pateint resource
+    return {
+      status: 200,
+      response: newPaitentObject.toJSON(),
+      object: newPaitentObject,
+    };
+  } else if (patientData.status === "not-found") {
+    // When patient is not found return an operation outcome
+    const operationOutcome = new OperationOutcome();
+    const issue = new OperationOutcomeIssue();
+    const details = new CodeableConcept();
+    issue.severity = "error";
+    issue.code = "not-found";
+    details.text = "The resource you are looking for is not found";
+    issue.details = details;
+    operationOutcome.issue = [issue];
+    return {
+      status: 404,
+      response: operationOutcome.toJSON(),
+      object: operationOutcome,
+    };
+  } else if (patientData.status === "gone") {
+    return { status: 410 };
+  } else {
+    // If there is an error return a operation outcome resource as an error
+    const operationOutcome = new OperationOutcome();
+    const issue = new OperationOutcomeIssue();
+    const details = new CodeableConcept();
+    issue.severity = "error";
+    issue.code = "invalid";
+    details.text = "Unknown error occured";
+    issue.details = details;
+    operationOutcome.issue = [issue];
+    return {
+      status: 500,
+      response: operationOutcome.toJSON(),
+      object: operationOutcome,
+    };
+  }
+};
+
+/**
+ * Deletes a resource specified by an UUID
+ * @param id the UUID of a resource
+ */
+const deleteResource = async (id: string) => {};
 exports.createNewResource = createNewResource;
 exports.readResourceById = readResourceById;
 exports.updateResource = updateResource;
+exports.readResourceByIdAndVersion = readResourceByIdAndVersion;
+exports.deleteResource = deleteResource;

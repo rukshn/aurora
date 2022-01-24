@@ -166,6 +166,8 @@ router.get("/:id/_history/:version", async (req, res) => {
     );
     return res.status(resource.status).json(resource.response);
   } catch (e) {
+    console.log(e);
+
     return res.status(500).json(error(e));
   }
 });
