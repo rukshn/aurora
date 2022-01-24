@@ -45,19 +45,20 @@ const getPatientByUuid = async (uuid: string) => {
     const patient = await prisma.patient.findFirst({
       where: {
         uuid: uuid,
-        retired: false,
       },
       orderBy: {
         id: "desc",
       },
     });
     // If patient exits return patient resource else send a not found response
-    if (patient.retired) {
+    if (patient === null) {
+      return { status: "not-found" };
+    } else if (patient.retired) {
       return { status: "gone" };
     } else if (patient.id) {
       return { status: "success", resource: patient };
     } else {
-      return { status: "not-found" };
+      return { status: "error" };
     }
   } catch (error) {
     // If an error orrcued return the error
@@ -102,6 +103,12 @@ const updatePatientResource = async (
   }
 };
 
+/**
+ * This function will return the patient resource specified by the given uuid and version number
+ * @param uuid the uuid of the patient resouce
+ * @param version the version number of the patient resource being requested
+ * @returns the patient resource if it exsits, else not foundm if deleted gone
+ */
 const getPatientByUuidAndVersion = async (uuid: string, version: number) => {
   try {
     const patient = await prisma.patient.findFirst({
@@ -110,7 +117,9 @@ const getPatientByUuidAndVersion = async (uuid: string, version: number) => {
         version: version,
       },
     });
-    if (patient.retired) {
+    if (patient === null) {
+      return { status: "not-found" };
+    } else if (patient.retired) {
       return { status: "gone" };
     } else if (patient.id) {
       return {
@@ -118,7 +127,7 @@ const getPatientByUuidAndVersion = async (uuid: string, version: number) => {
         resource: patient,
       };
     } else {
-      return { status: "not-found" };
+      return { status: "error" };
     }
   } catch (error) {
     return {
@@ -130,7 +139,30 @@ const getPatientByUuidAndVersion = async (uuid: string, version: number) => {
   }
 };
 
+/**
+ * This function retired a patient resource. Even though this function is called delete resource it does not delete a resource from the database
+ * As requested in most health applications
+ * The record is just retired and becomes inaccessible
+ * @param uuiid the UUID of the patient resource being deleted
+ */
+const deletePatientResource = async (uuiid: string) => {
+  try {
+    const deleteResource = await prisma.patient.updateMany({
+      where: {
+        uuid: uuiid,
+      },
+      data: {
+        retired: true,
+      },
+    });
+    return { status: "success" };
+  } catch (error) {
+    return { status: "error" };
+  }
+};
+
 exports.newPatientResource = newPatientResource;
 exports.getPatientByUuid = getPatientByUuid;
 exports.updatePatientResource = updatePatientResource;
 exports.getPatientByUuidAndVersion = getPatientByUuidAndVersion;
+exports.deletePatientResource = deletePatientResource;
