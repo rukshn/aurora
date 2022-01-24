@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
  * @param patient: A Patient resource object
  * @returns newly created patient resource
  */
-const newPatient = async (patient: Patient) => {
+const newPatientResource = async (patient: Patient) => {
   try {
     // Create a new resouce by using the sent data
     const newResource = await prisma.patient.create({
@@ -39,12 +39,16 @@ const newPatient = async (patient: Patient) => {
  * @param uuid The UUID of the patient,
  * @returns the patient resource
  */
-const getPatientByUuid = async (uuid: string) => {
+const getPatientByUuid = async (uuid: string, version?: number) => {
   try {
     // Get the last record of the patient by the UUID
     const patient = await prisma.patient.findFirst({
       where: {
         uuid: uuid,
+        version: version,
+      },
+      orderBy: {
+        id: "desc",
       },
     });
     // If patient exits return patient resource else send a not found response
@@ -64,5 +68,30 @@ const getPatientByUuid = async (uuid: string) => {
   }
 };
 
-exports.newPatient = newPatient;
+const updatePatientResource = async (
+  patient: Patient,
+  version: number,
+  uuid: string
+) => {
+  try {
+    const newResource = await prisma.patient.create({
+      data: {
+        resource: patient.toJSON(),
+        version: version,
+        uuid: uuid,
+      },
+    });
+    return { status: "success", resource: newResource };
+  } catch (error) {
+    return {
+      status: "error",
+      message:
+        "Prisma Error, somehting related to your database or connection!!",
+      details: error,
+    };
+  }
+};
+
+exports.newPatientResource = newPatientResource;
 exports.getPatientByUuid = getPatientByUuid;
+exports.updatePatientResource = updatePatientResource;
