@@ -111,6 +111,8 @@ const readResourceById = async (id: string) => {
       response: operationOutcome.toJSON(),
       object: operationOutcome,
     };
+  } else if (patientData.status === "gone") {
+    return { status: "410" };
   } else {
     // If there is an error return a operation outcome resource as an error
     const operationOutcome = new OperationOutcome();
@@ -204,6 +206,7 @@ const readResourceByIdAndVersion = async (id: string, version: number) => {
     id,
     version
   );
+  console.log(patientData.status);
 
   // If resturned patient object is a success return patient information
   if (patientData.status === "success") {
@@ -272,7 +275,23 @@ const readResourceByIdAndVersion = async (id: string, version: number) => {
  * Deletes a resource specified by an UUID
  * @param id the UUID of a resource
  */
-const deleteResource = async (id: string) => {};
+const deleteResource = async (id: string) => {
+  // Check if patient resource exists
+  const checkPatient = await readResourceById(id);
+
+  if (checkPatient.status === 404) {
+    return { status: 404 };
+  } else if (checkPatient.status === 200) {
+    const deletePatient = await patientModel.deletePatientResource(id);
+    console.log(deletePatient);
+    if (deletePatient.status === "success") {
+      return { status: 204 };
+    }
+  } else {
+    return { status: 500 };
+  }
+};
+
 exports.createNewResource = createNewResource;
 exports.readResourceById = readResourceById;
 exports.updateResource = updateResource;
