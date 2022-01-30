@@ -11,66 +11,74 @@ datasource db {
 }
 
 model codeSystem {
-  id BigInt @unique
-  url String?
-  identifier Json[]
-  version String?
-  name String?
-  title String?
-  status String?
-  experimental Boolean?
-  date String?
-  publisher String?
-  contact Json[]
-  description String?
-  useContext Json[]
-  jurisdiction Json[]
-  purpose String?
-  copyright String?
-  caseSensitive Boolean?
-  valueSet String?
+  id               BigInt               @unique
+  url              String?
+  identifier       Json[]
+  version          String?
+  name             String?
+  title            String?
+  status           String?
+  experimental     Boolean?
+  date             String?
+  publisher        String?
+  contact          Json[]
+  description      String?
+  useContext       Json[]
+  jurisdiction     Json[]
+  purpose          String?
+  copyright        String?
+  caseSensitive    Boolean?
+  valueSet         String?
   hierarchyMeaning String?
-  compositional Boolean?
-  versionNeeded Boolean?
-  content String?
-  supplements String?
-  filter codeSystemFilter[]
-  property codeSystemProperty[]
-  concept codeSystemConcept[]
+  compositional    Boolean?
+  versionNeeded    Boolean?
+  content          String?
+  supplements      String?
+  filter           codeSystemFilter[]
+  property         codeSystemProperty[]
+  concept          codeSystemConcept[]
 }
 
 model codeSystemFilter {
-  id BigInt @unique
-  code String?
-  description String?
-  operator String[]
-  value String?
+  id           BigInt      @unique
+  code         String?
+  description  String?
+  operator     String[]
+  value        String?
+  codeSystem   codeSystem? @relation(fields: [codeSystemId], references: [id])
+  codeSystemId BigInt?
 }
 
 model codeSystemProperty {
-  id BigInt @unique
-  code String?
-  url String?
-  type String?
-  description String?
+  id           BigInt      @unique
+  code         String?
+  url          String?
+  type         String?
+  description  String?
+  codeSystem   codeSystem? @relation(fields: [codeSystemId], references: [id])
+  codeSystemId BigInt?
 }
 
 model codeSystemConcept {
-  id BigInt @unique
-  code String
-  display String?
-  definition String?
-  designation Json[]
-  property codeSystemConceptProperty[]
+  id           BigInt                      @unique
+  code         String
+  display      String?
+  definition   String?
+  designation  Json[]
+  property     codeSystemConceptProperty[]
+  codeSystem   codeSystem?                 @relation(fields: [codeSystemId], references: [id])
+  codeSystemId BigInt?
 }
 
 model codeSystemConceptProperty {
-  id BigInt @unique
-  code String
-  valueCode String?
-  valueInteger Int?
-  valueDecimal Decimal?
-  valueDateTime DateTime?
-  valueCoding Json?
-  valueBoolean Boolean?
+  id                  BigInt             @unique
+  code                String
+  valueCode           String?
+  valueInteger        Int?
+  valueDecimal        Decimal?
+  valueDateTime       DateTime?
+  valueCoding         Json?
+  valueBoolean        Boolean?
+  codeSystemConcept   codeSystemConcept? @relation(fields: [codeSystemConceptId], references: [id])
+  codeSystemConceptId BigInt?
 }
